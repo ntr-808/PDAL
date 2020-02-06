@@ -91,7 +91,10 @@ void ReprojectionFilter::createTransform(const SpatialReference& srsSRS)
             throwError("source data has no spatial reference and "
                 "none is specified with the 'in_srs' option.");
     }
-    m_transform.reset(new SrsTransform(m_inSRS, m_outSRS));
+//    m_transform.reset(new SrsTransform(m_inSRS, m_outSRS));
+    std::vector<int> inOrder {2, 1, 3};
+    std::vector<int> outOrder {2, 1, 3};
+    m_transform.reset(new SrsTransform(m_inSRS, inOrder, m_outSRS, outOrder));
 }
 
 
