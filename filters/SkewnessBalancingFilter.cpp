@@ -64,6 +64,9 @@ void SkewnessBalancingFilter::processGround(PointViewPtr view)
     };
     std::sort(view->begin(), view->end(), cmp);
 
+for (PointId idx = 0; idx < view->size(); idx++)
+    std::cerr << "Z = " << view->getFieldAs<double>(Dimension::Id::Z, idx) << "!\n";
+
     auto setClass = [&view](PointId first, PointId last, int cl)
     {
         for (PointId idx = first; idx <= last; ++idx)
@@ -81,6 +84,7 @@ void SkewnessBalancingFilter::processGround(PointViewPtr view)
     for (PointId i = 0; i < view->size(); ++i)
     {
         double z = view->getFieldAs<double>(Dimension::Id::Z, i);
+std::cerr << "Z value = " << z << "!\n";
         n1 = n;
         n++;
         delta = z - M1;
@@ -114,8 +118,7 @@ PointViewSet SkewnessBalancingFilter::run(PointViewPtr input)
         return viewSet;
     viewSet.insert(input);
 
-    bool logOutput = log()->getLevel() > LogLevel::Debug1;
-    if (logOutput)
+    if (log()->getLevel() > LogLevel::Debug1)
         log()->floatPrecision(8);
 
     processGround(input);

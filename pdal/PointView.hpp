@@ -122,6 +122,32 @@ public:
     inline void getField(char *pos, Dimension::Id d,
         Dimension::Type type, PointId id) const;
 
+    double& x(PointId idx)
+    {
+        void *v = m_pointTable.getFieldDirect(Dimension::Id::X, idx);
+        return *reinterpret_cast<double *>(v);
+    }
+
+    double& y(PointId idx)
+    {
+        void *v = m_pointTable.getFieldDirect(Dimension::Id::Y, idx);
+        return *reinterpret_cast<double *>(v);
+    }
+
+    double& z(PointId idx)
+    {
+        void *v = m_pointTable.getFieldDirect(Dimension::Id::Z, idx);
+        return *reinterpret_cast<double *>(v);
+    }
+
+    std::tuple<double&, double&, double&> xyz(PointId idx)
+    {
+        double& xr = x(idx);
+        double& yr = y(idx);
+        double& zr = z(idx);
+        return std::forward_as_tuple(xr, yr, zr);
+    }
+
     template<typename T>
     void setField(Dimension::Id dim, PointId idx, T val);
 
@@ -317,8 +343,10 @@ private:
     virtual void setFieldInternal(Dimension::Id dim, PointId idx,
         const void *buf);
     virtual void getFieldInternal(Dimension::Id dim, PointId idx,
-        void *buf) const
-    { m_pointTable.getFieldInternal(dim, m_index[idx], buf); }
+            void *buf) const
+        { m_pointTable.getFieldInternal(dim, m_index[idx], buf); }
+    virtual void *getFieldDirect(Dimension::Id dim, PointId idx)
+        { return m_pointTable.getFieldDirect(dim, m_index[idx]); }
 
     template<class T>
     T getFieldInternal(Dimension::Id dim, PointId pointIndex) const;
@@ -433,6 +461,7 @@ inline void PointView::setField(Dimension::Id dim,
             break;
     }
 }
+
 
 template <class T>
 inline T PointView::getFieldAs(Dimension::Id dim,

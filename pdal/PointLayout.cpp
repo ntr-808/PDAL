@@ -57,6 +57,8 @@ PointLayout::PointLayout()
 
 void PointLayout::finalize()
 {
+    if (!m_finalized)
+        registerDims( {Dimension::Id::X, Dimension::Id::Y, Dimension::Id::Z} );
     m_finalized = true;
 }
 

@@ -108,17 +108,18 @@ TEST(SkewnessTest, t3)
     t.layout()->registerDims(
         {Dimension::Id::Z, Dimension::Id::Classification} );
 
-    PointViewPtr bv(new PointView(t));
-    for (int i = 0; i < 10; ++i)
-        bv->setField(Dimension::Id::Z, i, i - 5);
-
     BufferReader reader;
-    reader.addView(bv);
 
     Stage* filter(f.createStage("filters.skewnessbalancing"));
     filter->setInput(reader);
 
     filter->prepare(t);
+    t.finalize();
+
+    PointViewPtr bv(new PointView(t));
+    for (int i = 0; i < 10; ++i)
+        bv->setField(Dimension::Id::Z, i, i - 5);
+    reader.addView(bv);
 
     PointViewSet s = filter->execute(t);
 
@@ -134,5 +135,4 @@ TEST(SkewnessTest, t3)
     }
     EXPECT_EQ(ground, 10U);
 }
-
 

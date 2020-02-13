@@ -46,6 +46,7 @@ TEST(MortonOrderTest, test_code)
     PointTable table;
     table.layout()->registerDim(Dimension::Id::X);
     table.layout()->registerDim(Dimension::Id::Y);
+    table.finalize();
 
     PointViewPtr view(new PointView(table));
 

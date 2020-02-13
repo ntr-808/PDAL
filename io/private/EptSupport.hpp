@@ -378,6 +378,11 @@ protected:
         std::copy(src, src + d->size(), dst);
     }
 
+    void *getFieldDirect(Dimension::Id id, PointId idx) override
+    {
+        return nullptr;
+    }
+
     char *getDimension(const Dimension::Detail* d, PointId idx)
     {
         return getPoint(idx) + d->offset();

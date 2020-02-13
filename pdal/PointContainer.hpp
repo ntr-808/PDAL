@@ -51,6 +51,7 @@ private:
         const void *val) = 0;
     virtual void getFieldInternal(Dimension::Id dim, PointId idx,
         void *val) const = 0;
+    virtual void *getFieldDirect(Dimension::Id dim, PointId idx) = 0;
 public:
     virtual PointLayoutPtr layout() const = 0;
 };

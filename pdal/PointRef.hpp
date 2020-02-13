@@ -59,6 +59,30 @@ public:
     bool hasDim(Dimension::Id dim) const
     { return m_layout.hasDim(dim); }
 
+
+    double& x()
+    {
+        void *v = m_container.getFieldDirect(Dimension::Id::X, m_idx);
+        return *reinterpret_cast<double *>(v);
+    }
+
+    double& y()
+    {
+        void *v = m_container.getFieldDirect(Dimension::Id::Y, m_idx);
+        return *reinterpret_cast<double *>(v);
+    }
+
+    double& z()
+    {
+        void *v = m_container.getFieldDirect(Dimension::Id::Z, m_idx);
+        return *reinterpret_cast<double *>(v);
+    }
+
+    std::tuple<double &, double &, double &> xyz()
+    {
+        return std::forward_as_tuple(x(), y(), z());
+    }
+
     /**
       Get the value of a field/dimension, converting it to the type as
       requested.  NOTE: Throws an exception if the value of the dimension

@@ -48,6 +48,7 @@ TEST(Stats, handcalc)
 {
     PointTable table;
     table.layout()->registerDim(Dimension::Id::X);
+    table.finalize();
     PointViewPtr v(new PointView(table));
     v->setField(Dimension::Id::X, 0, 1);
     v->setField(Dimension::Id::X, 1, 5);
@@ -88,6 +89,7 @@ TEST(Stats, baseline)
 {
     PointTable table;
     table.layout()->registerDim(Dimension::Id::X);
+    table.finalize();
     PointViewPtr v(new PointView(table));
 
     for (PointId idx = 0; idx < 100; idx++)
