@@ -479,7 +479,7 @@ public:
         {
             for (size_t i = 0; i < m_dims.size(); ++i)
             {
-                bb[i].low = std::numeric_limits<double>::max();
+                bb[i].low = (std::numeric_limits<double>::max)();
                 bb[i].high = std::numeric_limits<double>::lowest();
             }
 
