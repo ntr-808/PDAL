@@ -170,6 +170,10 @@ void EptReader::addArgs(ProgramArgs& args)
         m_args->m_query);
     args.add("ogr", "OGR filter geometries",
         m_args->m_ogr);
+
+    args.add("cull_to_selection",
+        "If set to false, points outside bounds/polygon may be returned",
+        m_cullToSelection);
 }
 
 
@@ -863,7 +867,8 @@ void EptReader::process(PointView& dst, PointRef& pr, const uint64_t nodeId,
         return false;
     };
 
-    if (selected && m_queryBounds.contains(x, y, z) && passesPolyFilter(x, y))
+    if (!m_cullToSelection ||
+        (selected && m_queryBounds.contains(x, y, z) && passesPolyFilter(x, y)))
     {
         dst.setField(Dimension::Id::X, dstId, x);
         dst.setField(Dimension::Id::Y, dstId, y);

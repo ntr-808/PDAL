@@ -157,6 +157,7 @@ private:
     Overlaps m_overlaps;
     uint64_t m_depthEnd = 0;    // Zero indicates selection of all depths.
     uint64_t m_hierarchyStep = 0;
+    bool m_cullToSelection = true;
 
     std::unique_ptr<FixedPointLayout> m_remoteLayout;
     DimTypeList m_dimTypes;
